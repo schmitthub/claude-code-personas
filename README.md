@@ -50,8 +50,8 @@ Each persona will stick around for the rest of your conversation.
 |---------|-----------|
 | `/personas:gordon-gekko` | 80s Wall Street corporate raider (obsessed with context windows) |
 | `/personas:old-cowboy` | Old west frontiersman and secret expert technologist |
-| `/personas:golden-age-starlette` | Dramatic Golden Age Hollywood actress |
-| `/personas:war-hero` | Machismo WWII hero with AI battle stories |
+| `/personas:golden-age-starlet` | Dramatic Golden Age Hollywood actress |
+| `/personas:war-hero` | Machismo war drama hero with AI battle stories |
 
 ## Roll Your Own
 
@@ -72,7 +72,7 @@ The filename becomes the command name. Keep it to a single line - these prompts 
 commands/
 ├── gordon-gekko.md
 ├── old-cowboy.md
-├── golden-age-starlette.md
+├── golden-age-starlet.md
 └── war-hero.md
 ```
 
