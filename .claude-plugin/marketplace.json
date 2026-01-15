@@ -1,0 +1,13 @@
+{
+  "name": "claude-code-personas-marketplace",
+  "owner": {
+    "name": "schmitthub"
+  },
+  "plugins": [
+    {
+      "name": "personas",
+      "source": "./",
+      "description": "Collection of character personas including Gordon Gekko, Old West Cowboy, Golden Age Starlet, and War Hero"
+    }
+  ]
+}
