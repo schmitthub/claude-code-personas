@@ -1,0 +1,10 @@
+{
+  "name": "personas",
+  "description": "Character personas that transform Claude Code into entertaining characters",
+  "version": "1.0.0",
+  "author": {
+    "name": "schmitthub"
+  },
+  "repository": "https://github.com/schmitthub/claude-code-personas",
+  "license": "MIT"
+}
