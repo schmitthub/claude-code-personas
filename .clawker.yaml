@@ -1,0 +1,61 @@
+# Clawker Configuration
+# Documentation: https://github.com/schmitthub/clawker
+
+build:
+  image: "buildpack-deps:bookworm-scm"
+  packages: # apt-get on Debian, apk on Alpine
+    - git
+    - curl
+    - ripgrep
+
+agent:
+  #env_file: # load env vars from files (Docker env-file format)
+  #  - ".env"
+  #  - "~/.secrets/api-keys.env"
+  from_env: # passthrough host env vars by name (warns if unset)
+    - "GH_TOKEN"
+  env: {}
+  claude_code:
+    config:
+      strategy: "copy" # "copy" (host ~/.claude/) or "fresh" (clean)
+    use_host_auth: true # keyring or ~/.claude/.credentials.json
+  enable_shared_dir: false # read-only mount at ~/.clawker-share
+  post_init: | # runs once after init (set -e), failure aborts startup
+    claude mcp add -s local serena -- uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context claude-code --project "$(pwd)" --enable-web-dashboard false
+
+workspace:
+  default_mode: "bind" # "bind" (live sync) or "snapshot" (isolated copy)
+
+security:
+  firewall:
+    add_domains: # additional allowed domains
+      - github.com
+      - api.github.com
+    rules:
+      - action: allow
+        dst: github.com
+        path_default: ""
+        port: 22
+        proto: ssh
+  docker_socket: false # mount Docker socket (security risk if enabled)
+  git_credentials:
+    forward_https: true
+    forward_ssh: true
+    forward_gpg: true
+    copy_git_config: true
+
+#loop: # autonomous loop settings (clawker loop iterate / clawker loop tasks)
+#  max_loops: 50 # maximum iterations per session
+#  stagnation_threshold: 3 # iterations without progress before circuit trips
+#  timeout_minutes: 15 # per-iteration timeout
+#  loop_delay_seconds: 3 # delay between iterations
+#  calls_per_hour: 100 # API rate limit (0 to disable)
+#  skip_permissions: false # allow all tools without prompting
+#  hooks_file: "" # custom hooks file (overrides defaults)
+#  append_system_prompt: "" # additional system prompt instructions
+#  same_error_threshold: 5 # consecutive identical errors before trip
+#  output_decline_threshold: 70 # output shrink percentage before trip
+#  max_consecutive_test_loops: 3 # test-only iterations before trip
+#  safety_completion_threshold: 5 # completion indicators without exit before trip
+#  completion_threshold: 2 # indicators required for strict completion
+#  session_expiration_hours: 24 # session TTL
